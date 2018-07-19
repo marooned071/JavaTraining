@@ -1,24 +1,26 @@
 package me.training.spiralcipher.impl;
 
 public enum Direction {
-    DOWN(1, 0),
-    UP(-1, 0),
-    RIGHT(0, 1),
-    LEFT(0, -1);
+    DOWN(0, 1),
+    UP(0, -1),
+    RIGHT(1, 0),
+    LEFT(-1, 0);
 
-    private int rowChange;
-    private int columnChange;
+    private int xChange;
+    private int yChange;
 
-    Direction(int rowChange, int columnChange) {
-        this.rowChange = rowChange;
-        this.columnChange = columnChange;
+    Direction(int xChange, int yChange) {
+        this.xChange = xChange;
+        this.yChange = yChange;
     }
 
-    public int getRowChange() {
-        return rowChange;
+    public int getXChange() {
+        return xChange;
     }
 
-    public int getColumnChange() {
-        return columnChange;
+    public int getYChange() {
+        return yChange;
     }
+
+
 }
