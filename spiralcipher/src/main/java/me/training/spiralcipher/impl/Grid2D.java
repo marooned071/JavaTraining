@@ -13,7 +13,6 @@ public class Grid2D<T> {
             tab.add(new ArrayList<>());
             for (int j = 0; j < columns; j++) {
                 tab.get(i).add(defaultValue);
-
             }
         }
     }
@@ -56,6 +55,10 @@ public class Grid2D<T> {
     public boolean isInBounds(Point point) {
 
         return isInBounds(point.getX(), point.getY());
+    }
+
+    public List<T> getRow(int y) {
+        return tab.get(y);
     }
 
     public boolean isInBounds(int x, int y) {
