@@ -8,34 +8,33 @@ import me.training.routecipher.grid.GridWalker;
 import me.training.routecipher.grid.Point;
 
 public class RouteCipher {
-    public static String encrypt(String plainText, int columns, int rows, RouteCycle routeCycle, int startX,
+    public static String encrypt(String plainText, int columns, int rows, Direction[] routeCycle, int startX,
                                  int startY) {
         validateStartPoint(columns, rows, startX, startY);
         String toEncrypt = plainText.replaceAll("[ \\-'.?/!]", "").toUpperCase();
         GridWalker gridWalker = GridWalker.create(columns, rows);
         EncryptGridWalkerStepConsumer stepConsumer = EncryptGridWalkerStepConsumer.of(toEncrypt, rows, columns);
-        gridWalker.walk(new CyclicDirectionSupplier(routeCycle.getDirectionOrder()),
-                stepConsumer, new Point(startX, startY));
+        gridWalker.walk(new CyclicDirectionSupplier(routeCycle), stepConsumer, new Point(startX, startY));
 
         return stepConsumer.result();
     }
 
 
-    public static String encrypt(String plainText, int columns, int rows, RouteCycle routeCycle) {
+    public static String encrypt(String plainText, int columns, int rows, Direction[] routeCycle) {
         return encrypt(plainText, columns, rows, routeCycle, columns - 1, 0);
     }
 
-    public static String decrypt(String encryptedText, int columns, int rows, RouteCycle routeCycle) {
+    public static String decrypt(String encryptedText, int columns, int rows, Direction[] routeCycle) {
         return decrypt(encryptedText, columns, rows, routeCycle, columns - 1, 0);
 
     }
 
-    public static String decrypt(String encryptedText, int columns, int rows, RouteCycle routeCycle, int startX,
+    public static String decrypt(String encryptedText, int columns, int rows, Direction[] routeCycle, int startX,
                                  int startY) {
         validateStartPoint(columns, rows, startX, startY);
         GridWalker gridWalker = GridWalker.create(columns, rows);
         DecryptGridWalkerStepConsumer stepConsumer = new DecryptGridWalkerStepConsumer(encryptedText, columns, rows);
-        gridWalker.walk(new CyclicDirectionSupplier(routeCycle.getDirectionOrder()), stepConsumer,
+        gridWalker.walk(new CyclicDirectionSupplier(routeCycle), stepConsumer,
                 new Point(startX, startY));
         return stepConsumer.result();
     }

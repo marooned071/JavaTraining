@@ -36,23 +36,25 @@ public class RouteCipherTest {
 
 
     @Test
-    public void shouldStartAtStartingPointWrongDirection() {
-        assertEquals("AFKX",
+    public void shouldStartAtStartingPointClockWise() {
+        Direction[] clockWiseFor00 = {Direction.RIGHT, Direction.DOWN, Direction.LEFT, Direction.UP};
+        assertEquals("ABCDEJOXXXXXKFGHINML",
                 encrypt("ABCDEFGHIJKLMNO", 5, 4,
-                        RouteCycle.CLOCK_WISE,0,0));
-        assertEquals("A????F????K????X????",
-                decrypt("AFKX", 5, 4,
-                        RouteCycle.CLOCK_WISE,0,0));
+                        clockWiseFor00, 0, 0));
+        assertEquals("ABCDEFGHIJKLMNOXXXXX",
+                decrypt("ABCDEJOXXXXXKFGHINML", 5, 4,
+                        clockWiseFor00, 0, 0));
     }
 
     @Test
-    public void shouldStartAtStartingPoint() {
+    public void shouldStartAtStartingPointCounterClockWise() {
+        Direction[] counterClockWiseFor00 = {Direction.DOWN, Direction.RIGHT, Direction.UP, Direction.LEFT};
         assertEquals("AFKXXXXXOJEDCBGLMNIH",
                 encrypt("ABCDEFGHIJKLMNO", 5, 4,
-                        RouteCycle.COUNTER_CLOCK_WISE,0,0));
-        assertEquals("A????F????K????X????",
-                decrypt("AFKX", 5, 4,
-                        RouteCycle.COUNTER_CLOCK_WISE,0,0));
+                        counterClockWiseFor00, 0, 0));
+        assertEquals("ABCDEFGHIJKLMNOXXXXX",
+                decrypt("AFKXXXXXOJEDCBGLMNIH", 5, 4,
+                        counterClockWiseFor00, 0, 0));
     }
 
     @Test

@@ -1,16 +1,16 @@
 package me.training.routecipher.cipher;
 
-public enum RouteCycle {
-    CLOCK_WISE(Direction.DOWN, Direction.LEFT, Direction.UP, Direction.RIGHT),
-    COUNTER_CLOCK_WISE(Direction.LEFT, Direction.DOWN, Direction.RIGHT, Direction.UP);
 
-    private Direction[] directionOrder;
+import static me.training.routecipher.cipher.Direction.DOWN;
+import static me.training.routecipher.cipher.Direction.LEFT;
+import static me.training.routecipher.cipher.Direction.RIGHT;
+import static me.training.routecipher.cipher.Direction.UP;
 
-    RouteCycle(Direction... directionOrder) {
-        this.directionOrder = directionOrder;
+public final class RouteCycle {
+    public static final Direction[] CLOCK_WISE = new Direction[]{DOWN, LEFT, UP, RIGHT};
+    public static final Direction[] COUNTER_CLOCK_WISE = new Direction[]{LEFT, DOWN, RIGHT, UP};
+
+    private RouteCycle() {
     }
 
-    public Direction[] getDirectionOrder() {
-        return directionOrder;
-    }
 }
