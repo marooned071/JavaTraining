@@ -1,13 +1,14 @@
 package me.training.routecipher.grid;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Grid2DTest {
 
@@ -78,11 +79,11 @@ public class Grid2DTest {
         assertFalse(characterGrid2D.isInBounds(4, 1));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testAddOutOfBounds() {
         Grid2D<Character> characterGrid2D = new Grid2D<>(4, 3, 'X',
                 ArrayUtils.toObject("ABCDEFGHI".toCharArray()));
 
-        characterGrid2D.set(3, 3, 'Y');
+        assertThrows(IndexOutOfBoundsException.class, () -> characterGrid2D.set(3, 3, 'Y'));
     }
 }

@@ -1,10 +1,13 @@
 package me.training.routecipher.cipher;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import static me.training.routecipher.cipher.RouteCipher.decrypt;
 import static me.training.routecipher.cipher.RouteCipher.encrypt;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 public class RouteCipherTest {
 
@@ -29,6 +32,27 @@ public class RouteCipherTest {
         String decrypted = decrypt(encrypted, 5, 3, RouteCycle.COUNTER_CLOCK_WISE);
         assertEquals("ABCDEFGHIJKLMNO", decrypted);
 
+    }
+
+
+    @Test
+    public void shouldStartAtStartingPointWrongDirection() {
+        assertEquals("AFKX",
+                encrypt("ABCDEFGHIJKLMNO", 5, 4,
+                        RouteCycle.CLOCK_WISE,0,0));
+        assertEquals("A????F????K????X????",
+                decrypt("AFKX", 5, 4,
+                        RouteCycle.CLOCK_WISE,0,0));
+    }
+
+    @Test
+    public void shouldStartAtStartingPoint() {
+        assertEquals("AFKXXXXXOJEDCBGLMNIH",
+                encrypt("ABCDEFGHIJKLMNO", 5, 4,
+                        RouteCycle.COUNTER_CLOCK_WISE,0,0));
+        assertEquals("A????F????K????X????",
+                decrypt("AFKX", 5, 4,
+                        RouteCycle.COUNTER_CLOCK_WISE,0,0));
     }
 
     @Test
@@ -89,4 +113,27 @@ public class RouteCipherTest {
                 decrypt("YHWDSSPEAHTRSPEAMXJPOIENWJPYTEOIAARMEHENAR", 3, 14,
                         RouteCycle.COUNTER_CLOCK_WISE));
     }
+
+
+    @Test
+    public void shouldThrowsIllegalArgumentExceptionWhenStartingPointIsOutOfGrid() {
+        assertThrows(IllegalArgumentException.class, () -> encrypt("Test", 3, 3,
+                RouteCycle.COUNTER_CLOCK_WISE, -1, 0));
+        assertThrows(IllegalArgumentException.class, () -> encrypt("Test", 3, 3,
+                RouteCycle.COUNTER_CLOCK_WISE, 0, -1));
+        assertThrows(IllegalArgumentException.class, () -> encrypt("Test", 3, 3,
+                RouteCycle.COUNTER_CLOCK_WISE, 3, 2));
+        assertThrows(IllegalArgumentException.class, () -> encrypt("Test", 3, 3,
+                RouteCycle.COUNTER_CLOCK_WISE, 1, 3));
+
+        assertThrows(IllegalArgumentException.class, () -> decrypt("Test", 3, 3,
+                RouteCycle.COUNTER_CLOCK_WISE, -1, 0));
+        assertThrows(IllegalArgumentException.class, () -> decrypt("Test", 3, 3,
+                RouteCycle.COUNTER_CLOCK_WISE, 0, -1));
+        assertThrows(IllegalArgumentException.class, () -> decrypt("Test", 3, 3,
+                RouteCycle.COUNTER_CLOCK_WISE, 3, 2));
+        assertThrows(IllegalArgumentException.class, () -> decrypt("Test", 3, 3,
+                RouteCycle.COUNTER_CLOCK_WISE, 1, 3));
+    }
+
 }
