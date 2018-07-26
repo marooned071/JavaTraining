@@ -9,8 +9,8 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>spiralcipher</module>
-        <module>spiralcipher-usage</module>
+        <module>routecipher</module>
+        <module>routecipher-demo</module>
     </modules>
 
     <properties>
@@ -47,14 +47,6 @@
                     <configuration>
                         <source>${jdk.version}</source>
                         <target>${jdk.version}</target>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.7.0</version>
-                    <configuration>
-                        <release>10</release>
                     </configuration>
                     <dependencies>
                         <dependency>
