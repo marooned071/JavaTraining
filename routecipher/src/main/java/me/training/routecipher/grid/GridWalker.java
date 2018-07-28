@@ -1,6 +1,8 @@
 package me.training.routecipher.grid;
 
-import me.training.routecipher.cipher.Direction;
+import me.training.utils.direction.Direction;
+import me.training.utils.grid.Grid2D;
+import me.training.utils.grid.Point;
 
 import java.util.function.Consumer;
 

@@ -1,4 +1,4 @@
-package me.training.routecipher.grid;
+package me.training.utils.grid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ public class Grid2D<T> {
     public Grid2D(int columns, int rows, T defaultValue) {
         tab = new ArrayList<>(rows);
         for (int i = 0; i < rows; i++) {
-            tab.add(new ArrayList<>());
+            tab.add(new ArrayList<>(columns));
             for (int j = 0; j < columns; j++) {
                 tab.get(i).add(defaultValue);
             }
@@ -21,7 +21,7 @@ public class Grid2D<T> {
         int charIndex = 0;
         tab = new ArrayList<>(rows);
         for (int i = 0; i < rows; i++) {
-            tab.add(new ArrayList<>());
+            tab.add(new ArrayList<>(columns));
             for (int j = 0; j < columns; j++) {
                 if (charIndex >= values.length) {
                     tab.get(i).add(defaultValue);

@@ -1,6 +1,7 @@
 package me.training.routecipher.cipher;
 
 
+import me.training.utils.direction.Direction;
 import org.junit.jupiter.api.Test;
 
 import static me.training.routecipher.cipher.RouteCipher.decrypt;

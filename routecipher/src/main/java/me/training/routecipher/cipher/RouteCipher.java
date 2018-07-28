@@ -5,7 +5,8 @@ import me.training.routecipher.grid.CyclicDirectionSupplier;
 import me.training.routecipher.grid.DecryptGridWalkerStepConsumer;
 import me.training.routecipher.grid.EncryptGridWalkerStepConsumer;
 import me.training.routecipher.grid.GridWalker;
-import me.training.routecipher.grid.Point;
+import me.training.utils.direction.Direction;
+import me.training.utils.grid.Point;
 
 public class RouteCipher {
     public static String encrypt(String plainText, int columns, int rows, Direction[] routeCycle, int startX,

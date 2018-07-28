@@ -1,4 +1,4 @@
-package me.training.routecipher.grid;
+package me.training.utils.grid;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;

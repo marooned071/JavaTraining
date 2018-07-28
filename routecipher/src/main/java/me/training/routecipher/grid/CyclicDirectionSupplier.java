@@ -1,6 +1,7 @@
 package me.training.routecipher.grid;
 
-import me.training.routecipher.cipher.Direction;
+
+import me.training.utils.direction.Direction;
 
 import java.util.Arrays;
 import java.util.List;

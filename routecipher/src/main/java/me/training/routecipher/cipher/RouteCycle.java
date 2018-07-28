@@ -1,10 +1,12 @@
 package me.training.routecipher.cipher;
 
 
-import static me.training.routecipher.cipher.Direction.DOWN;
-import static me.training.routecipher.cipher.Direction.LEFT;
-import static me.training.routecipher.cipher.Direction.RIGHT;
-import static me.training.routecipher.cipher.Direction.UP;
+import me.training.utils.direction.Direction;
+
+import static me.training.utils.direction.Direction.DOWN;
+import static me.training.utils.direction.Direction.LEFT;
+import static me.training.utils.direction.Direction.RIGHT;
+import static me.training.utils.direction.Direction.UP;
 
 public final class RouteCycle {
     public static final Direction[] CLOCK_WISE = new Direction[]{DOWN, LEFT, UP, RIGHT};

@@ -1,5 +1,7 @@
 package me.training.routecipher.grid;
 
+import me.training.utils.grid.Grid2D;
+import me.training.utils.grid.Point;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 

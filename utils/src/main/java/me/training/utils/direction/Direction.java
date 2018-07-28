@@ -1,4 +1,4 @@
-package me.training.routecipher.cipher;
+package me.training.utils.direction;
 
 public enum Direction {
     DOWN(0, 1),
