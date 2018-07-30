@@ -2,6 +2,7 @@ package me.training.utils.grid;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class Grid2D<T> {
 
@@ -33,6 +34,16 @@ public class Grid2D<T> {
         }
     }
 
+    public Grid2D(int columns, int rows, Supplier<T> valueSupplier) {
+        tab = new ArrayList<>(rows);
+        for (int i = 0; i < rows; i++) {
+            tab.add(new ArrayList<>(columns));
+            for (int j = 0; j < columns; j++) {
+                tab.get(i).add(valueSupplier.get());
+            }
+        }
+    }
+
     public T get(Point point) {
         return tab.get(point.getY()).get(point.getX());
     }
@@ -50,6 +61,14 @@ public class Grid2D<T> {
     public void set(int x, int y, T t) {
 
         tab.get(y).set(x, t);
+    }
+
+    public int getColumnsCount() {
+        return tab.get(0).size();
+    }
+
+    public int getRowsCount() {
+        return tab.size();
     }
 
     public boolean isInBounds(Point point) {
