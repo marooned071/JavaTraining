@@ -13,6 +13,8 @@
         <module>routecipher</module>
         <module>routecipher-demo</module>
         <module>colorgrid</module>
+        <module>tree</module>
+        <module>whiteboard</module>
     </modules>
 
     <properties>

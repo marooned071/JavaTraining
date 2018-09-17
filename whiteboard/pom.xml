@@ -9,16 +9,16 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <packaging>jar</packaging>
-
-    <artifactId>routecipher-demo</artifactId>
+    <artifactId>whiteboard</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>me.training</groupId>
-            <artifactId>routecipher</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
         </dependency>
+
     </dependencies>
+
 
 </project>
