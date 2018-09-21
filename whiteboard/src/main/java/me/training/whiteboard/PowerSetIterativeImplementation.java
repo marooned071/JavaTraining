@@ -7,18 +7,17 @@ import java.util.Set;
 
 public class PowerSetIterativeImplementation {
 
-    public static <T> Set<Set<T>> powerSet3(Set<T> initialSet) {
-        if(initialSet.isEmpty()){
+    public static <E> Set<Set<E>> powerSet3(Set<E> initialSet) {
+        if (initialSet.isEmpty()) {
             return Set.of(Set.of());
         }
         int powerSetSize = (int) Math.pow(2, initialSet.size());
-        List<T> setAsList = new ArrayList<>(initialSet);
-        Set<Set<T>> resultSet = new HashSet<>();
+        List<E> setAsList = new ArrayList<>(initialSet);
+        Set<Set<E>> resultSet = new HashSet<>();
         for (int i = 0; i < powerSetSize; i++) {
-            Set<T> set = new HashSet<>();
+            Set<E> set = new HashSet<>();
             for (int j = 0; j < setAsList.size(); j++) {
-                int bit = (i >> j) & 1;
-                if (bit == 1) {
+                if (((i >> j) & 1) == 1) { //check if j-th bit in i is set
                     set.add(setAsList.get(j));
                 }
             }
@@ -26,4 +25,6 @@ public class PowerSetIterativeImplementation {
         }
         return resultSet;
     }
+
+
 }

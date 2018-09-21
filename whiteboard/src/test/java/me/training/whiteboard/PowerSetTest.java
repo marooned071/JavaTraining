@@ -88,12 +88,14 @@ class RecursiveStackOverflowImplPowerSetTest implements PowerSetTest, TimingPowe
         return PowerSetRecursiveImplementations.powerSetStackOverFlowImpl(initialSet);
     }
 }
+
 @ExtendWith(AverageExecutionTimeLoggerExtension.class)
 class GuavaPowerSetTest2 {
     @RepeatedTest(10)
+//    WTF why Guava is so fast?!
     void testGuavaImpl() {
         Set<String> set = Set.of("qwertyuiopasdfghjklzxcvbnm".split(""));
         Set<Set<String>> result = Sets.powerSet(set);
-        assertEquals((int) Math.pow(2,set.size()), result.size());
+        assertEquals((int) Math.pow(2, set.size()), result.size());
     }
 }

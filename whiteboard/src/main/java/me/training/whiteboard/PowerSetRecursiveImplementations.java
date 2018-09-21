@@ -3,16 +3,16 @@ package me.training.whiteboard;
 import java.util.*;
 
 public class PowerSetRecursiveImplementations {
-    public static <T> Set<Set<T>> powerSet1(Set<T> entrySet) {
+    public static <E> Set<Set<E>> powerSet1(Set<E> entrySet) {
         if (entrySet.isEmpty()) {
             return Set.of(Set.of());
         } else {
-            Set<T> withoutElement = new HashSet<>(entrySet);
-            T element = pollFirstElement(withoutElement);
-            Set<Set<T>> resultWithoutElement = powerSet1(withoutElement);
-            Set<Set<T>> resultWithElement = new HashSet<>();
+            Set<E> withoutElement = new HashSet<>(entrySet);
+            E element = pollFirstElement(withoutElement);
+            Set<Set<E>> resultWithoutElement = powerSet1(withoutElement);
+            Set<Set<E>> resultWithElement = new HashSet<>();
             resultWithoutElement.forEach(resultSet -> {
-                        Set<T> set = new HashSet<>(resultSet);
+                        Set<E> set = new HashSet<>(resultSet);
                         set.add(element);
                         resultWithElement.add(set);
                     }
@@ -22,55 +22,55 @@ public class PowerSetRecursiveImplementations {
         }
     }
 
-    private static <T> T pollFirstElement(Set<T> set) {
-        Iterator<T> initialSetIterator = set.iterator();
-        T element = initialSetIterator.next();
+    private static <E> E pollFirstElement(Set<E> set) {
+        Iterator<E> initialSetIterator = set.iterator();
+        E element = initialSetIterator.next();
         initialSetIterator.remove();
         return element;
     }
 
 
-    public static <T> Set<Set<T>> powerSet2(Set<T> entrySet) {
+    public static <E> Set<Set<E>> powerSet2(Set<E> entrySet) {
         if (entrySet.isEmpty()) {
             return Set.of(Set.of());
         }
-        Queue<T> restQueue = new ArrayDeque<>(entrySet);
-        T element = restQueue.poll();
+        Queue<E> restQueue = new ArrayDeque<>(entrySet);
+        E element = restQueue.poll();
         return powerSet2(Set.of(), restQueue, element);
     }
 
-    private static <T> Set<Set<T>> powerSet2(Set<T> prevSet, Queue<T> restQueue, T element) {
+    private static <E> Set<Set<E>> powerSet2(Set<E> prevSet, Queue<E> restQueue, E element) {
         if (restQueue.isEmpty()) {
-            Set<T> withElement = new HashSet<>(prevSet);
+            Set<E> withElement = new HashSet<>(prevSet);
             withElement.add(element);
-            Set<Set<T>> toRet = new HashSet<>();
+            Set<Set<E>> toRet = new HashSet<>();
             toRet.add(prevSet);
             toRet.add(withElement);
             return toRet;
         } else {
-            Set<T> withoutElementSet = Set.copyOf(prevSet);
-            Set<T> withElementSet = new HashSet<>(prevSet);
+            Set<E> withoutElementSet = Set.copyOf(prevSet);
+            Set<E> withElementSet = new HashSet<>(prevSet);
             withElementSet.add(element);
-            Queue<T> newRestQueue = new ArrayDeque<>(restQueue);
-            T newElement = newRestQueue.poll();
-            Set<Set<T>> withElementResult = powerSet2(withoutElementSet, newRestQueue, newElement);
-            Set<Set<T>> withoutElementResult = powerSet2(withElementSet, newRestQueue, newElement);
+            Queue<E> newRestQueue = new ArrayDeque<>(restQueue);
+            E newElement = newRestQueue.poll();
+            Set<Set<E>> withElementResult = powerSet2(withoutElementSet, newRestQueue, newElement);
+            Set<Set<E>> withoutElementResult = powerSet2(withElementSet, newRestQueue, newElement);
             withElementResult.addAll(withoutElementResult);
             return withElementResult;
         }
     }
 
-    public static <T> Set<Set<T>> powerSetStackOverFlowImpl(Set<T> originalSet) {
-        Set<Set<T>> sets = new HashSet<Set<T>>();
+    public static <E> Set<Set<E>> powerSetStackOverFlowImpl(Set<E> originalSet) {
+        Set<Set<E>> sets = new HashSet<>();
         if (originalSet.isEmpty()) {
-            sets.add(new HashSet<T>());
+            sets.add(new HashSet<>());
             return sets;
         }
-        List<T> list = new ArrayList<T>(originalSet);
-        T head = list.get(0);
-        Set<T> rest = new HashSet<T>(list.subList(1, list.size()));
-        for (Set<T> set : powerSetStackOverFlowImpl(rest)) {
-            Set<T> newSet = new HashSet<T>();
+        List<E> list = new ArrayList<>(originalSet);
+        E head = list.get(0);
+        Set<E> rest = new HashSet<E>(list.subList(1, list.size()));
+        for (Set<E> set : powerSetStackOverFlowImpl(rest)) {
+            Set<E> newSet = new HashSet<E>();
             newSet.add(head);
             newSet.addAll(set);
             sets.add(newSet);
