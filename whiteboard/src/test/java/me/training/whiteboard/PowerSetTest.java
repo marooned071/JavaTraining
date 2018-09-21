@@ -1,10 +1,12 @@
 package me.training.whiteboard;
 
 import com.google.common.collect.Sets;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -16,7 +18,9 @@ interface TimingPowerSetTest extends Function<Set<String>, Set<Set<String>>> {
     @RepeatedTest(10)
     default void testBenchmarkPowerSets() {
         Set<String> set = Set.of("qwertyuiopasdfg".split(""));
-        apply(set);
+        Set<Set<String>> result = apply(set);
+        Set<Set<String>> allSets = new HashSet<>();
+        result.forEach(allSets::add); //iterate over all produced sets to measure lazy Guava implementation also
     }
 }
 
@@ -54,48 +58,79 @@ interface PowerSetTest extends Function<Set<String>, Set<Set<String>>> {
     }
 }
 
-class RecursiveImpl1PowerSetTest implements PowerSetTest, TimingPowerSetTest {
+class RecursiveImpl1PowerSetTest implements PowerSetTest {
     @Override
     public Set<Set<String>> apply(Set<String> initialSet) {
         return PowerSetRecursiveImplementations.powerSet1(initialSet);
     }
 }
 
-class RecursiveImpl2PowerSetTest implements PowerSetTest, TimingPowerSetTest {
+class RecursiveImpl2PowerSetTest implements PowerSetTest {
     @Override
     public Set<Set<String>> apply(Set<String> initialSet) {
         return PowerSetRecursiveImplementations.powerSet2(initialSet);
     }
 }
 
-class GuavaPowerSetTest implements PowerSetTest, TimingPowerSetTest {
+class GuavaPowerSetTest implements PowerSetTest {
     @Override
     public Set<Set<String>> apply(Set<String> initialSet) {
         return Sets.powerSet(initialSet);
     }
 }
 
-class IterativePowerSetImplementationTest implements PowerSetTest, TimingPowerSetTest {
+class IterativePowerSetImplementationTest implements PowerSetTest {
     @Override
     public Set<Set<String>> apply(Set<String> initialSet) {
         return PowerSetIterativeImplementation.powerSet3(initialSet);
     }
 }
 
-class RecursiveStackOverflowImplPowerSetTest implements PowerSetTest, TimingPowerSetTest {
+class RecursiveStackOverflowImplPowerSetTest implements PowerSetTest {
     @Override
     public Set<Set<String>> apply(Set<String> initialSet) {
         return PowerSetRecursiveImplementations.powerSetStackOverFlowImpl(initialSet);
     }
 }
 
-@ExtendWith(AverageExecutionTimeLoggerExtension.class)
-class GuavaPowerSetTest2 {
-    @RepeatedTest(10)
-//    WTF why Guava is so fast?!
-    void testGuavaImpl() {
-        Set<String> set = Set.of("qwertyuiopasdfghjklzxcvbnm".split(""));
-        Set<Set<String>> result = Sets.powerSet(set);
-        assertEquals((int) Math.pow(2, set.size()), result.size());
+
+class TimingPowerSetTests{
+
+    @Nested
+    class RecursiveImpl1PowerSetTest implements TimingPowerSetTest {
+        @Override
+        public Set<Set<String>> apply(Set<String> initialSet) {
+            return PowerSetRecursiveImplementations.powerSet1(initialSet);
+        }
     }
+    @Nested
+    class RecursiveImpl2PowerSetTest implements TimingPowerSetTest {
+        @Override
+        public Set<Set<String>> apply(Set<String> initialSet) {
+            return PowerSetRecursiveImplementations.powerSet2(initialSet);
+        }
+    }
+    @Nested
+    class GuavaPowerSetTest implements TimingPowerSetTest {
+        @Override
+        public Set<Set<String>> apply(Set<String> initialSet) {
+            return Sets.powerSet(initialSet);
+        }
+    }
+    @Nested
+    class IterativePowerSetImplementationTest implements TimingPowerSetTest {
+        @Override
+        public Set<Set<String>> apply(Set<String> initialSet) {
+            return PowerSetIterativeImplementation.powerSet3(initialSet);
+        }
+    }
+    @Nested
+    class RecursiveStackOverflowImplPowerSetTest implements TimingPowerSetTest {
+        @Override
+        public Set<Set<String>> apply(Set<String> initialSet) {
+            return PowerSetRecursiveImplementations.powerSetStackOverFlowImpl(initialSet);
+        }
+    }
+
+
 }
