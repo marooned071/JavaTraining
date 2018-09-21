@@ -1,7 +1,6 @@
 package me.training.whiteboard;
 
 import com.google.common.collect.Sets;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,20 +8,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ExtendWith(AverageExecutionTimeLoggerExtension.class)
-interface TimingPowerSetTest extends Function<Set<String>, Set<Set<String>>> {
-
-    @RepeatedTest(10)
-    default void testBenchmarkPowerSets() {
-        Set<String> set = Set.of("qwertyuiopasdfg".split(""));
-        Set<Set<String>> result = apply(set);
-        Set<Set<String>> allSets = new HashSet<>();
-        result.forEach(allSets::add); //iterate over all produced sets to measure lazy Guava implementation also
-    }
-}
 
 interface PowerSetTest extends Function<Set<String>, Set<Set<String>>> {
 
@@ -94,43 +84,11 @@ class RecursiveStackOverflowImplPowerSetTest implements PowerSetTest {
 }
 
 
-class TimingPowerSetTests{
-
-    @Nested
-    class RecursiveImpl1PowerSetTest implements TimingPowerSetTest {
-        @Override
-        public Set<Set<String>> apply(Set<String> initialSet) {
-            return PowerSetRecursiveImplementations.powerSet1(initialSet);
-        }
+class StreamImplTest implements PowerSetTest {
+    @Override
+    public Set<Set<String>> apply(Set<String> initialSet) {
+        Stream<Set<String>> powerSetStream = PowerSetStream.of(initialSet);
+        return powerSetStream.collect(Collectors.toSet());
     }
-    @Nested
-    class RecursiveImpl2PowerSetTest implements TimingPowerSetTest {
-        @Override
-        public Set<Set<String>> apply(Set<String> initialSet) {
-            return PowerSetRecursiveImplementations.powerSet2(initialSet);
-        }
-    }
-    @Nested
-    class GuavaPowerSetTest implements TimingPowerSetTest {
-        @Override
-        public Set<Set<String>> apply(Set<String> initialSet) {
-            return Sets.powerSet(initialSet);
-        }
-    }
-    @Nested
-    class IterativePowerSetImplementationTest implements TimingPowerSetTest {
-        @Override
-        public Set<Set<String>> apply(Set<String> initialSet) {
-            return PowerSetIterativeImplementation.powerSet3(initialSet);
-        }
-    }
-    @Nested
-    class RecursiveStackOverflowImplPowerSetTest implements TimingPowerSetTest {
-        @Override
-        public Set<Set<String>> apply(Set<String> initialSet) {
-            return PowerSetRecursiveImplementations.powerSetStackOverFlowImpl(initialSet);
-        }
-    }
-
-
 }
+
